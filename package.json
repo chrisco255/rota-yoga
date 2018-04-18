@@ -1,0 +1,22 @@
+{
+  "name": "rota-yoga",
+  "version": "0.0.1",
+  "description": "GraphQL server for Rota Cast",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chrisco255/rota-yoga.git"
+  },
+  "author": "Chris Cordle",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chrisco255/rota-yoga/issues"
+  },
+  "homepage": "https://github.com/chrisco255/rota-yoga#readme",
+  "dependencies": {
+    "graphql-yoga": "^1.8.5"
+  }
+}
