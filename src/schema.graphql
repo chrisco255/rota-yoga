@@ -1,5 +1,8 @@
+directive @isAuthenticated on QUERY | FIELD | MUTATION
+
 type Query {
-    hello: String
+    hello: String @isAuthenticated 
+    world: String
 }
 
 type Mutation {

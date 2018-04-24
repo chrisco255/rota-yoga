@@ -15,7 +15,7 @@ const checkJwt = jwt({
   }),
 
   // Validate the audience and the issuer.
-  credentialsRequired: true,
+  credentialsRequired: false,
   aud: 'https://rotacast.auth0.com/api/v2/',
   issuer: 'https://rotacast.auth0.com/',
   algorithms: [`RS256`]
