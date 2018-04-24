@@ -1,0 +1,6 @@
+type Clip {
+    id: ID! @unique
+    createdAt: DateTime!
+    url: String!
+    length: Int!
+}
