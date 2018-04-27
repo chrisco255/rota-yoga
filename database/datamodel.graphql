@@ -18,8 +18,9 @@ type Table {
 type User {
     id: ID! @unique
     createdAt: DateTime!
-    email: String @unique
-    name: String!
+    email: String! @unique
+    name: String
     auth0Id: String! @unique
     tables: [Table!]! @relation(name: "UserTables")
+    onboardingComplete: Boolean @default(value: "false")
 }

@@ -10,14 +10,14 @@ const checkJwt = jwt({
   secret: jwksRsa.expressJwtSecret({
     cache: true,
     rateLimit: true,
-    jwksRequestsPerMinute: 1,
-    jwksUri: `https://rotacast.auth0.com/.well-known/jwks.json`
+    jwksRequestsPerMinute: 10,
+    jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`
   }),
 
   // Validate the audience and the issuer.
   credentialsRequired: false,
-  aud: 'https://rotacast.auth0.com/api/v2/',
-  issuer: 'https://rotacast.auth0.com/',
+  aud: process.env.AUTH0_AUDIENCE,
+  issuer: process.env.AUTH0_ISSUER,
   algorithms: [`RS256`]
 })
 

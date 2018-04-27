@@ -1,11 +1,12 @@
+require('dotenv').config();
 const { GraphQLServer } = require('graphql-yoga');
 const { formatError } = require('apollo-errors');
 const { makeExecutableSchema } = require('graphql-tools');
 const { importSchema } = require('graphql-import');
 
-const { checkJwt } = require('./src/middleware/jwt');
-const { getUser } = require('./src/middleware/getUser');
-const { directiveResolvers } = require('./src/directives');
+const { checkJwt } = require('./server/middleware/jwt');
+const { getUser } = require('./server/middleware/getUser');
+const { directiveResolvers } = require('./server/directives');
 
 const ctxUser = ctx => ctx.request.user;
 
@@ -13,7 +14,7 @@ const resolvers = {
     Query: {
         hello: (parent, args, context, info) => {
             console.log('Hello context', JSON.stringify(context.request.user));
-            const userToken = context.request.user.token;
+            const userToken = context.request.user;
     
             console.log(JSON.stringify('In the hello resolver', userToken));
     
@@ -39,7 +40,7 @@ const resolvers = {
 };
 
 const schema = makeExecutableSchema({
-    typeDefs: importSchema('./src/schema.graphql'),
+    typeDefs: importSchema('./server/schema.graphql'),
     resolvers,
     directiveResolvers,
 });
@@ -60,8 +61,8 @@ server.express.post(
     },
 );
 
-server.express.post(server.options.endpoint, (req, res, next) =>
-  getUser(req, res, next)
-);
+// server.express.post(server.options.endpoint, (req, res, next) =>
+//     getUser(req, res, next)
+// );
 
 server.start({ formatError }, () => console.log('Server is running at localhost:4000'));

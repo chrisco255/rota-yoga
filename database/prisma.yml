@@ -1,5 +1,3 @@
-service: rota-cast
-stage: dev
 datamodel: datamodel.graphql
-secret: mysecret123
-cluster: public-phantomchopper-798/prisma-us1
+secret: ${env:PRISMA_SECRET}
+endpoint: https://us1.prisma.sh/public-phantomchopper-798/rota-cast/dev

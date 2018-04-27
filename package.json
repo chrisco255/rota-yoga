@@ -4,7 +4,7 @@
   "description": "GraphQL server for Rota Cast",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
   "dependencies": {
     "apollo-errors": "^1.9.0",
     "connect-ensure-login": "^0.1.1",
+    "dotenv": "^5.0.1",
     "express-jwt": "^5.3.1",
     "graphql-import": "^0.5.0",
     "graphql-tools": "^2.24.0",
