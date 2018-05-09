@@ -1,3 +1,10 @@
 datamodel: datamodel.graphql
+
 secret: ${env:PRISMA_SECRET}
-endpoint: https://us1.prisma.sh/public-phantomchopper-798/rota-cast/dev
+
+hooks:
+  post-deploy:
+    - graphql get-schema --project database
+    - graphql prepare
+
+endpoint: https://us1.prisma.sh/chris-cordle-076fda/database/dev

@@ -1,10 +1,18 @@
 directive @isAuthenticated on QUERY | FIELD | MUTATION
 
+type User {
+    email: String!
+    id: ID!
+    onboardingComplete: Boolean
+    displayName: String
+}
+
 type Query {
-    hello: String @isAuthenticated 
+    hello: User @isAuthenticated 
     world: String
+    userInfo: User @isAuthenticated
 }
 
 type Mutation {
-    authenticate: String
+    onboardUser(name: String): User @isAuthenticated
 }
