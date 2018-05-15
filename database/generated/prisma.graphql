@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/chris-cordle-076fda/database/dev
-# timestamp: Wed May 09 2018 02:29:01 GMT-0500 (CDT)
+# timestamp: Mon May 14 2018 23:55:52 GMT-0500 (CDT)
 
 type AggregateClip {
   count: Int!
@@ -22,8 +22,10 @@ type Clip implements Node {
   id: ID!
   createdAt: DateTime!
   author(where: UserWhereInput): User!
-  url: String!
-  length: Int!
+  url: String
+  length: Int
+  clipId: String!
+  isPublshed: Boolean!
 }
 
 """A connection to a list of items."""
@@ -37,8 +39,10 @@ type ClipConnection {
 }
 
 input ClipCreateInput {
-  url: String!
-  length: Int!
+  url: String
+  length: Int
+  clipId: String!
+  isPublshed: Boolean
   author: UserCreateOneInput!
 }
 
@@ -65,6 +69,10 @@ enum ClipOrderByInput {
   url_DESC
   length_ASC
   length_DESC
+  clipId_ASC
+  clipId_DESC
+  isPublshed_ASC
+  isPublshed_DESC
   updatedAt_ASC
   updatedAt_DESC
 }
@@ -72,8 +80,10 @@ enum ClipOrderByInput {
 type ClipPreviousValues {
   id: ID!
   createdAt: DateTime!
-  url: String!
-  length: Int!
+  url: String
+  length: Int
+  clipId: String!
+  isPublshed: Boolean!
 }
 
 type ClipSubscriptionPayload {
@@ -118,12 +128,16 @@ input ClipSubscriptionWhereInput {
 input ClipUpdateDataInput {
   url: String
   length: Int
+  clipId: String
+  isPublshed: Boolean
   author: UserUpdateOneInput
 }
 
 input ClipUpdateInput {
   url: String
   length: Int
+  clipId: String
+  isPublshed: Boolean
   author: UserUpdateOneInput
 }
 
@@ -280,6 +294,50 @@ input ClipWhereInput {
 
   """All values greater than or equal the given value."""
   length_gte: Int
+  clipId: String
+
+  """All values that are not equal to given value."""
+  clipId_not: String
+
+  """All values that are contained in given list."""
+  clipId_in: [String!]
+
+  """All values that are not contained in given list."""
+  clipId_not_in: [String!]
+
+  """All values less than the given value."""
+  clipId_lt: String
+
+  """All values less than or equal the given value."""
+  clipId_lte: String
+
+  """All values greater than the given value."""
+  clipId_gt: String
+
+  """All values greater than or equal the given value."""
+  clipId_gte: String
+
+  """All values containing the given string."""
+  clipId_contains: String
+
+  """All values not containing the given string."""
+  clipId_not_contains: String
+
+  """All values starting with the given string."""
+  clipId_starts_with: String
+
+  """All values not starting with the given string."""
+  clipId_not_starts_with: String
+
+  """All values ending with the given string."""
+  clipId_ends_with: String
+
+  """All values not ending with the given string."""
+  clipId_not_ends_with: String
+  isPublshed: Boolean
+
+  """All values that are not equal to given value."""
+  isPublshed_not: Boolean
   author: UserWhereInput
 }
 

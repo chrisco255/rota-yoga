@@ -4,10 +4,13 @@ const { formatError } = require('apollo-errors');
 const { makeExecutableSchema } = require('graphql-tools');
 const { importSchema } = require('graphql-import');
 const { Prisma, extractFragmentReplacements, forwardTo } = require("prisma-binding")
+const cors = require('cors');
 
 const { checkJwt } = require('./server/middleware/jwt');
 const { getUser } = require('./server/middleware/getUser');
 const { directiveResolvers } = require('./server/directives');
+const getStorageAccessSignature = require('./server/resolvers/queries/getStorageAccessSignature');
+const uuid = require('uuid');
 
 const ctxUser = ctx => ctx.request.user;
 
@@ -29,7 +32,8 @@ const resolvers = {
         world: () => "An unauthenticated resolver",
         userInfo: (parent, args, context, info) => {
             return context.request.user;
-        }
+        },
+        getStorageAccessSignature
     },
     Mutation: {
         async onboardUser(parent, { name }, ctx, info) {
@@ -42,6 +46,33 @@ const resolvers = {
                 },
                 info
             );
+        },
+        async createClip(parent, args, ctx, info) {
+            const clipId = uuid.v4();
+            const userId = ctxUser(ctx).id;
+
+            const clip = await ctx.db.mutation.createClip(
+                {
+                    data: {
+                        clipId,
+                        author: {
+                            connect: {
+                                id: userId,
+                            },
+                        },
+                    },
+                },
+                info
+            );
+
+            //console.log('queryResolvers: ', JSON.stringify(queryResolvers))
+
+            const sharedAccessSignature = getStorageAccessSignature(parent, args, ctx, info);
+
+            return {
+                sharedAccessSignature,
+                clipId
+            };
         },
     },
 };
@@ -67,6 +98,8 @@ const server = new GraphQLServer({
         ...req,
     }),
 });
+
+server.express.use(cors());
 
 server.express.post(
     server.options.endpoint,

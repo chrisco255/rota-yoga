@@ -2,8 +2,10 @@ type Clip {
     id: ID! @unique
     createdAt: DateTime!
     author: User!
-    url: String!
-    length: Int!
+    url: String
+    length: Int
+    clipId: String!
+    isPublshed: Boolean! @default(value: "false")
 }
 
 type Table {

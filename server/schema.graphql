@@ -7,12 +7,24 @@ type User {
     displayName: String
 }
 
+type SharedAccessSignature {
+    token: String!
+    sasUrl: String!
+}
+
+type SASClip {
+    sharedAccessSignature: SharedAccessSignature!
+    clipId: String!
+}
+
 type Query {
     hello: User @isAuthenticated 
     world: String
     userInfo: User @isAuthenticated
+    getStorageAccessSignature: SharedAccessSignature @isAuthenticated
 }
 
 type Mutation {
     onboardUser(name: String): User @isAuthenticated
+    createClip: SASClip @isAuthenticated
 }
